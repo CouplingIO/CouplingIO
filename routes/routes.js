@@ -39,7 +39,7 @@ exports.changePass = function(req, res){
     		}
     	}
     })
-    
+
 };
 
 exports.register = function(req, res){
@@ -58,6 +58,16 @@ exports.register = function(req, res){
 
 exports.issueCoupon = function(req, res){
     console.log(req.query);
+    var newCoupon = new req.db.coupons();
+    newCoupon.issue(req.query.issueAmount, req.query.expirationDate);
+    newCoupon.save(function(err){
+        if (err){
+            console.log(err);
+            res.json({success:false});
+        } else {
+            res.json({success:true});
+        }
+    })
     res.json({success:true});
 };
 

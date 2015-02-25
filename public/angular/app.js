@@ -1,6 +1,6 @@
 var app = angular.module('couplingIO', ['couplingIO.controllers','couplingIO.directives','couplingIO.services', 'ngRoute','LocalStorageModule']);
 
-//Local Storage 
+//Local Storage
 app.config(function (localStorageServiceProvider) {
   localStorageServiceProvider
     .setPrefix('couplingIO')
@@ -9,12 +9,13 @@ app.config(function (localStorageServiceProvider) {
 });
 
 app.config(['$routeProvider', function ($routeProvider) {
-    $routeProvider.when('/', { templateUrl: '/partials/home.html', controller:'homeController'}); 
-    $routeProvider.when('/home', { templateUrl: '/partials/home.html', controller:'homeController'}); 
-    $routeProvider.when('/login', { templateUrl: '/partials/login.html', controller:'loginController'}); 
-    $routeProvider.when('/register', { templateUrl: '/partials/register.html', controller:'registerController'}); 
+    $routeProvider.when('/', { templateUrl: '/partials/home.html', controller:'homeController'});
+    $routeProvider.when('/home', { templateUrl: '/partials/home.html', controller:'homeController'});
+    $routeProvider.when('/login', { templateUrl: '/partials/login.html', controller:'loginController'});
+    $routeProvider.when('/register', { templateUrl: '/partials/register.html', controller:'registerController'});
+    $routeProvider.when('/issueCoupon', { templateUrl: '/partials/issueCoupon.html', controller:'issueCouponController'});
     //Otherwise
     $routeProvider.otherwise({redirectTo: '/'});
 }]).config(['$locationProvider', function($locationProvider) {
     $locationProvider.html5Mode(true);
-}]);    
+}]);

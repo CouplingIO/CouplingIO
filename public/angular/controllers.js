@@ -38,6 +38,9 @@ controllers.controller('issueCouponController', ['$scope','userService','session
     console.log('issueCouponController init');
 
     $scope.issueCoupon = function(coupon){
-
+        userService.issueCoupon($scope.issueAmount, $scope.expirationDate).then(function(promise){
+            console.log(promise.data)
+        });
+        console.log("Coupon issued");
     }
 }]);

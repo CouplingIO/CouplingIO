@@ -20,4 +20,16 @@ module.exports = function(db) {
 
 	db.users = db.model('users', user);
 
+	var coupon = new Schema({
+		amountIssued	: Number,
+		expiration		: Date,
+	});
+
+	coupon.methods.issue = function(amount, expirationDate){
+		this.amountIssued = amount;
+		this.expiration = expirationDate;
+	}
+
+	db.coupons = db.model('coupons', coupon);
+
 };

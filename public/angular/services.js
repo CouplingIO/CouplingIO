@@ -80,16 +80,17 @@ services.factory('userService',['$http', function ($http) {
         return promise;
     }
 
-    factory.issueCoupon = function() {
+    factory.issueCoupon = function(issueAmount, expirationDate) {
         var promise = $http({method: 'POST',
                 url: '/issueCoupon',
+                params: {"issueAmount":issueAmount, "expiration":expirationDate}
             })
             .success(function (data, status, headers, config) {
-                console.log("Success issueCoupon");
+                console.log("Success issuing Coupon");
                 return data;
             })
             .error(function (data, status, headers, config) {
-                console.log("Error issueCoupon");
+                console.log("Error issuing Coupon");
                 return data;
             });
         return promise;

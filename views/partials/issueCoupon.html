@@ -1,15 +1,17 @@
 <h1>Issue coupons</h1>
-<div ng-controller="issueCouponController">
+<div>
     <form name="issueForm" class="css-form" novalidate>
         <div class="form-group">
             <label for="numberOfCoupons">How many?</label>
-            <input type="number" class="form-control" id="numberOfCoupons" ng-model="coupon.IssueAmount" placeholder="How many?">
+            <input type="number" class="form-control" id="numberOfCoupons" ng-model="coupon.issueAmount" placeholder="How many?">
         </div>
         <div class="form-group">
             <label for="expirationDate" ng-model="coupon.ExpirationDate">Expiration Date</label>
-            <input type="datetime" class="form-control" id="expirationDate" placeholder="Expiration">
+            <input type="datetime" class="form-control" id="expirationDate" ng-model="coupon.expirationDate" placeholder="Expiration">
         </div>
 
-        <button type="submit" class="btn btn-default" ng-click="issueCoupon()">Submit</button>
+        <button type="submit" class="btn btn-default" ng-click="issueCoupon(coupon)">Submit</button>
     </form>
+
+    <pre> coupon = {{coupon | json }} </pre>
 </div>
