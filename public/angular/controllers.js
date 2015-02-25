@@ -19,6 +19,18 @@ controllers.controller('loginController', ['$scope','userService','sessionStorag
 }]);
 
 controllers.controller('registerController', ['$scope','userService','sessionStorage', function($scope,userService,sessionStorage) {
+    $scope.registerUser = function(){
+        userService.register($scope.newUsername,$scope.newPassword).then(function(promise){
+            console.log(promise.data);
+        });
+    }
+
+    $scope.changePassword = function(){
+        userService.changePass($scope.newUsername,$scope.newPassword).then(function(promise){
+            console.log(promise.data);
+        });
+    }
+
     console.log('registerController init');
 }]);
 

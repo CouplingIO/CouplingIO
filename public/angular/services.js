@@ -54,11 +54,27 @@ services.factory('userService',['$http', function ($http) {
                 params: {"username":username,"pass":pass}
             })
             .success(function (data, status, headers, config) {
-                console.log("Success getting price");
+                console.log("Success regsitering user");
                 return data;
             })
             .error(function (data, status, headers, config) {
-                console.log("Error getting price");
+                console.log("Error registering user");
+                return data;
+            });
+        return promise;
+    }
+
+    factory.changePass = function(username,newPass) {
+        var promise = $http({method: 'POST',
+                url: '/changePass',
+                params: {"username":username,"newPassword":newPass}
+            })
+            .success(function (data, status, headers, config) {
+                console.log("Success regsitering user");
+                return data;
+            })
+            .error(function (data, status, headers, config) {
+                console.log("Error registering user");
                 return data;
             });
         return promise;
