@@ -16,9 +16,44 @@ exports.login = function(req, res){
     res.json({success:true});
 };
 
+exports.changePass = function(req, res){
+    console.log(req.query);
+    req.db.users.findOne({username:req.query.username},{},function(err,user){
+    	if (err){
+    		console.log(err);
+    		res.json({success:false});
+    	} else {
+    		if (user){
+    			user.changePass(req.query.newPassword);
+    			user.save(function(err){
+			    	if (err){
+			    		console.log(err);
+			    		res.json({success:false});
+			    	} else {
+			    		res.json({success:true});
+			    	}
+			    });
+    		} else {
+    			console.log("user not exist");
+    			res.json({success:false});
+    		}
+    	}
+    })
+    
+};
+
 exports.register = function(req, res){
     console.log(req.query);
-    res.json({success:true});
+    var newUser = new req.db.users();
+    newUser.create(req.query.username,req.query.pass);
+    newUser.save(function(err){
+    	if (err){
+    		console.log(err);
+    		res.json({success:false});
+    	} else {
+    		res.json({success:true});
+    	}
+    });
 };
 
 exports.issueCoupon = function(req, res){
