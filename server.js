@@ -9,36 +9,33 @@ var path = require('path');
 // Mongo
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
+//ChromaWallet
+var cWallet = require('cc-wallet-core');
 //Auth
-//var basicAuth = require('basic-auth-connect')
+var basicAuth = require('basic-auth-connect')
 
 //Launch express
 var app = express();
 
 //Get Arguments
-/*
 var args = process.argv.slice(2);
 var port = process.env.PORT;
-*/
-//Connect DB
 
+//Set Envarioment
+if (args[0] == 'dev'){
+    var port = 3010;
+} else if (args[0] == 'prod'){
+    //Use HTTP Auth on PROD
+    app.use(basicAuth('coupling', '666'));
+}
+
+//Connect DB
 mongoose.connect('mongodb://admin:admin@ds053190.mongolab.com:53190/couplingio');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {
     console.log('Connected to MONGOLAB DB !');
 });
-
-//If is a dev session or no
-/*
-if (args[0] == 'dev'){
-    var port = 3010;
-} else {
-    //Auth
-    app.use(basicAuth('coupling', '666'));
-}
-*/
-var port = 3010;
 
 //Mailer app config
 /*
@@ -92,6 +89,7 @@ app.post('/login', routes.login);
 app.post('/register', routes.register);
 app.post('/changePass', routes.changePass);
 app.post('/issueCoupon', routes.issueCoupon);
+app.post('/createWallet', routes.createWallet);
 
 //IF NOT GO TO ERROR404
 app.all('*',function(req,res) { res.redirect('/404') });
@@ -102,5 +100,6 @@ module.exports = app;
 app.listen(app.get('port'), function() {
     console.log('CouplingIO app started on '+Date(Date.now())+' at port: '+app.get('port'));
 })
+
 
 
