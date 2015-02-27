@@ -46,7 +46,7 @@ db.once('open', function callback () {
     console.log('Connected to MONGOLAB DB !');
 });
 
-<<<<<<< HEAD
+
 passport.use(new google_strategy({
   clientID: 'CouplingIO',
   clientSecret: 'Secret CouplingIO token',
@@ -83,8 +83,7 @@ if (args[0] == 'dev'){
 */
 var port = 3010;
 
-=======
->>>>>>> e81ffcc5c9872ef4b0fdef552142b7da6097e0a4
+
 //Mailer app config
 /*
 mailer.extend(app, {
