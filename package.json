@@ -5,7 +5,7 @@
   "description": "Kawal's website",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node server.js"
   },
   "dependencies": {
     "express": "4.x",
@@ -17,7 +17,8 @@
     "request": "~2.53.0",
     "mongodb": "~1.4.31",
     "mongoose": "~3.8.23",
-    "basic-auth-connect": "~1.0.0"
+    "basic-auth-connect": "~1.0.0",
+    "cc-wallet-core": "git://github.com/chromaway/cc-wallet-core.git"
   },
   "engines": {
     "node": "0.10.x"
