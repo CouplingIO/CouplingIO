@@ -9,8 +9,10 @@ var path = require('path');
 // Mongo
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
+//ChromaWallet
+var cWallet = require('cc-wallet-core');
 //Auth
-//var basicAuth = require('basic-auth-connect')
+var basicAuth = require('basic-auth-connect')
 
 var UserHandler = require('./handlers/UserHandler');
 var AuthHandler = require('./handlers/AuthHandler');
@@ -23,12 +25,18 @@ var app = express();
 var google_strategy = require('passport-google-oauth').OAuth2Strategy;
 
 //Get Arguments
-/*
 var args = process.argv.slice(2);
 var port = process.env.PORT;
-*/
-//Connect DB
 
+//Set Envarioment
+if (args[0] == 'dev'){
+    var port = 3010;
+} else if (args[0] == 'prod'){
+    //Use HTTP Auth on PROD
+    app.use(basicAuth('coupling', '666'));
+}
+
+//Connect DB
 mongoose.connect('mongodb://admin:admin@ds053190.mongolab.com:53190/couplingio');
 
 var db = mongoose.connection;
@@ -38,6 +46,7 @@ db.once('open', function callback () {
     console.log('Connected to MONGOLAB DB !');
 });
 
+<<<<<<< HEAD
 passport.use(new google_strategy({
   clientID: 'CouplingIO',
   clientSecret: 'Secret CouplingIO token',
@@ -74,6 +83,8 @@ if (args[0] == 'dev'){
 */
 var port = 3010;
 
+=======
+>>>>>>> e81ffcc5c9872ef4b0fdef552142b7da6097e0a4
 //Mailer app config
 /*
 mailer.extend(app, {
@@ -129,6 +140,7 @@ app.post('/login', routes.login);
 app.post('/register', routes.register);
 app.post('/changePass', routes.changePass);
 app.post('/issueCoupon', routes.issueCoupon);
+app.post('/createWallet', routes.createWallet);
 
 //IF NOT GO TO ERROR404
 app.all('*',function(req,res) { res.redirect('/404') });
@@ -139,5 +151,6 @@ module.exports = app;
 app.listen(app.get('port'), function() {
     console.log('CouplingIO app started on '+Date(Date.now())+' at port: '+app.get('port'));
 })
+
 
 

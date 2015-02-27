@@ -96,5 +96,20 @@ services.factory('userService',['$http', function ($http) {
         return promise;
     }
 
+    factory.createWallet = function(issueAmount, expirationDate) {
+        var promise = $http({method: 'POST',
+                url: '/createWallet'
+            })
+            .success(function (data, status, headers, config) {
+                console.log("Success creating wallet");
+                return data;
+            })
+            .error(function (data, status, headers, config) {
+                console.log("Error creating wallet");
+                return data;
+            });
+        return promise;
+    }
+
     return factory;
 }]);

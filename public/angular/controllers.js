@@ -12,6 +12,12 @@ controllers.controller('homeController', ['$scope','userService','sessionStorage
             }
         });
     }
+
+    $scope.createWallet = function(){
+        userService.createWallet().then(function(promise){
+            console.log(promise.data);
+        });
+    }
 }]);
 
 controllers.controller('loginController', ['$scope','userService','sessionStorage', function($scope,userService,sessionStorage) {
@@ -38,7 +44,7 @@ controllers.controller('issueCouponController', ['$scope','userService','session
     console.log('issueCouponController init');
 
     $scope.issueCoupon = function(coupon){
-        userService.issueCoupon($scope.issueAmount, $scope.expirationDate).then(function(promise){
+        userService.issueCoupon(coupon.issueAmount, coupon.expirationDate).then(function(promise){
             console.log(promise.data)
         });
         console.log("Coupon issued");

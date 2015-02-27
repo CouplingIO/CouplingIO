@@ -1,6 +1,7 @@
 var express = require('express');
 var async = require('async');
 var request = require('request');
+var cWallet = require('cc-wallet-core');
 var router = express.Router();
 
 exports.index = function(req, res){
@@ -67,8 +68,24 @@ exports.issueCoupon = function(req, res){
         } else {
             res.json({success:true});
         }
-    })
-    res.json({success:true});
+    });
+};
+
+exports.createWallet = function(req, res){
+    var wallet = new cWallet.Wallet({testnet:true});
+    console.log(wallet);
+
+    //Parse circular structure of wallet and return it
+    var cache = [];
+    res.json(JSON.parse(JSON.stringify(wallet, function(key, value) {
+        if (typeof value === 'object' && value !== null) {
+            if (cache.indexOf(value) !== -1) {
+                return;
+            }
+            cache.push(value);
+        }
+        return value;
+    })));
 };
 
 

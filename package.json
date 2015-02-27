@@ -5,8 +5,7 @@
   "description": "Kawal's website",
   "main": "server.js",
   "scripts": {
-    "start prod": "node server.js",
-    "start dev": "node server.js dev"
+    "start": "node server.js",
   },
   "dependencies": {
     "async": "~0.9.0",
@@ -16,9 +15,13 @@
     "express": "4.x",
     "mongodb": "~1.4.31",
     "mongoose": "~3.8.23",
+<<<<<<< HEAD
     "passport": "^0.2.1",
     "path": "~0.11.14",
     "request": "~2.53.0"
+=======
+    "basic-auth-connect": "~1.0.0"
+>>>>>>> e81ffcc5c9872ef4b0fdef552142b7da6097e0a4
   },
   "engines": {
     "node": "0.10.x"
