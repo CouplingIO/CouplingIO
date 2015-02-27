@@ -1,5 +1,5 @@
-var user = require('../models/user');
-var settlement = require('../models/settlement');
+var user = require('../schemas/user');
+//var settlement = require('../models/settlement');
 
 var UserHandler = function() {
     this.createUser = handleCreateUserRequest;
@@ -35,3 +35,27 @@ function handleGetUserRequest(req,res) {
         if(err) {
             console.log(err);
             return res.send(500,err);
+        }
+        if(!user){
+            return res.send(401,"User Not Authenticated");
+        }
+        // if(user) {
+        //     // settlement.find({'email':user.email},function(err,settlements) {
+        //     //     user.settlements = settlements;
+        //     //     return res.send(200,settlements);
+        //     });
+        // }
+    });
+};
+
+function handleUpdateUserRequest(req,res) {
+    var dummy = {text: "dummy get"};
+    res.json = (200, dummy);
+};
+
+function handleDeleteUserRequest(req,res) {
+    var dummy = {text: "dummy get"};
+    res.json = (200, dummy);
+};
+
+module.exports = UserHandler;
