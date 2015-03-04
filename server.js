@@ -48,9 +48,9 @@ db.once('open', function callback () {
 
 
 passport.use(new google_strategy({
-  clientID: 'CouplingIO',
-  clientSecret: 'Secret CouplingIO token',
-  callbackURL : 'http://localhost:3010/auth/google/callback'
+  clientID: '738881702552-t7ta31oc68pf9ujljftteu4v7h6v71oh.apps.googleusercontent.com',
+  clientSecret: 'wst49LrsAT0SGSa35j4cAeIf',
+  callbackURL : 'http://localhost:2010//auth/google/callback'
   },
   function(accessToken, refreshToken, profile, done) {
     UserDB.findOne({email: profile._json.email}, function(err, usr) {
@@ -115,6 +115,8 @@ require('./schemas/user')(db);
 
 //Routes
 var routes = require('./routes/routes');
+
+routes.setupHandlers(app, handlers);
 
 //Set Up JSON parser and view engine
 app.use(bodyParser.json());

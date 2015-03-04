@@ -2,16 +2,7 @@ var controllers = angular.module('couplingIO.controllers', []);
 
 controllers.controller('homeController', ['$scope','userService','sessionStorage', function($scope,userService,sessionStorage) {
     console.log('homeController init');
-    $scope.userOnline = false;
 
-    $scope.logIn = function(){
-        userService.login("augusto","password").then(function(promise){
-            console.log(promise.data);
-            if (promise.data.success){
-                $scope.userOnline = true;
-            }
-        });
-    }
 
     $scope.createWallet = function(){
         userService.createWallet().then(function(promise){
@@ -20,8 +11,26 @@ controllers.controller('homeController', ['$scope','userService','sessionStorage
     }
 }]);
 
-controllers.controller('loginController', ['$scope','userService','sessionStorage', function($scope,userService,sessionStorage) {
+controllers.controller('loginController', ['$scope','userService','sessionStorage', '$location', '$window', 'Auth', function($scope, userService, sessionStorage, $location, $window, Auth) {
     console.log('loginController init');
+
+    $scope.userOnline = false;
+
+    $scope.logIn = function(){
+        userService.login("augusto","password").then(function(promise){
+            console.log(promise.data);
+            if (promise.data.success){
+                $rootScope.userOnline = true;
+            }
+        });
+    }
+
+    $scope.rememberme = true;
+
+    $scope.loginOauth = function(provider) {
+        $window.location.href = '/auth/' + provider;
+    };
+
 }]);
 
 controllers.controller('registerController', ['$scope','userService','sessionStorage', function($scope,userService,sessionStorage) {

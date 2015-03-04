@@ -1,4 +1,4 @@
-var app = angular.module('couplingIO', ['couplingIO.controllers','couplingIO.directives','couplingIO.services', 'ngRoute','LocalStorageModule']);
+var app = angular.module('couplingIO', ['couplingIO.controllers','couplingIO.directives','couplingIO.services', 'ngRoute','LocalStorageModule', 'ngCookies']);
 
 //Local Storage
 app.config(function (localStorageServiceProvider) {
