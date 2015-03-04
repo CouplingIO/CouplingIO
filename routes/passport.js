@@ -14,8 +14,8 @@ var keys = {
         'callbackURL'       : 'http://localhost:3010/auth/twitter/callback'
     },
     'google' : {
-        'clientID'      : 'your-secret-clientID-here',
-        'clientSecret'  : 'your-client-secret-here',
+        'clientID'      : '738881702552-t7ta31oc68pf9ujljftteu4v7h6v71oh.apps.googleusercontent.com',
+        'clientSecret'  : 'wst49LrsAT0SGSa35j4cAeIf',
         'callbackURL'   : 'http://localhost:3010/auth/google/callback'
     }
 };

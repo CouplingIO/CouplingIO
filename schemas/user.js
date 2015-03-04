@@ -7,22 +7,22 @@ module.exports = function(db) {
 	//User
 	var user_schema = new Schema({
 		facebook         : {
-	        id           : {type: String, required: true},
-	        token        : {type: String, required: false},
-	        email        : {type: String, required: true},
-	        name         : {type: String, required: true}
+	        id           : String,
+	        token        : String,
+	        email        : String,
+	        name         : String
 	    },
 	    twitter          : {
-	        id           : {type: String, required: true},
-	        token        : {type: String, required: false},
-	        displayName  : {type: String, required: true},
-	        username     : {type: String, required: true}
+	        id           : String,
+	        token        : String,
+	        displayName  : String,
+	        username     : String
 	    },
 	    google           : {
-	        id           : {type: String, required: true},
-	        token        : {type: String, required: false},
-	        email        : {type: String, required: true},
-	        name         : {type: String, required: true}
+	        id           : String,
+	        token        : String,
+	        email        : String,
+	        name         : String
 	    }
 	});
 	

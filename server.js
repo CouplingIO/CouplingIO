@@ -100,6 +100,13 @@ app.get('/auth/twitter/callback',
         failureRedirect : '/'
 }));
 
+app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
+app.get('/auth/google/callback',
+    passport.authenticate('google', {
+        successRedirect : '/register',
+        failureRedirect : '/'
+}));
+
 app.post('/login', routes.login);
 app.post('/register', routes.register);
 app.post('/issueCoupon', routes.issueCoupon);

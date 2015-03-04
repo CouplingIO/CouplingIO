@@ -1,10 +1,34 @@
 <div class="container">
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Coupling</h3>
+      </div>
+      <div class="panel-body">
+
+        <a class="btn btn-default" href="#" role="button">Home</a>
+        <a class="btn btn-default" href="/login" role="button" ng-show="!userOnline">Login</a>
+        <a class="btn btn-default" href="/logout" role="button" ng-show="userOnline">Logout</a>
+
+      </div>
+    </div>
+
+
+
+
+
 	<div class="row" ng-show="userOnline">
-		<h1>HOME User online</h1>
+		<h1>Coupling Wallet</h1>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            Wallet content
+          </div>
+          <div class="panel-footer">Wallet footer</div>
+        </div>
+
 	</div>
-	<div class="row" ng-show="!userOnline">
-		<a class="btn btn-default" href="#" role="button" ng-click="logIn()">Log In</a>
-	</div>
+
+
 	<div class="row" >
 		<a class="btn btn-default" href="#" role="button" ng-click="createWallet()">Create Wallet</a>
 	</div>
