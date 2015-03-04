@@ -14,15 +14,13 @@ var cWallet = require('cc-wallet-core');
 //Auth
 var basicAuth = require('basic-auth-connect')
 
-var UserHandler = require('./handlers/UserHandler');
-var AuthHandler = require('./handlers/AuthHandler');
+//var UserHandler = require('./handlers/UserHandler');
+//var AuthHandler = require('./handlers/AuthHandler');
 var passport = require('passport');
 var UserDB = require('./schemas/user');
 
 //Launch express
 var app = express();
-
-var google_strategy = require('passport-google-oauth').OAuth2Strategy;
 
 //Get Arguments
 var args = process.argv.slice(2);
@@ -38,16 +36,16 @@ if (args[0] == 'dev'){
 
 //Connect DB
 mongoose.connect('mongodb://admin:admin@ds053190.mongolab.com:53190/couplingio');
-
 var db = mongoose.connection;
-
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {
     console.log('Connected to MONGOLAB DB !');
 });
 
-
+//Passport
+var google_strategy = require('passport-google-oauth').OAuth2Strategy;
 passport.use(new google_strategy({
+<<<<<<< HEAD
   clientID: '738881702552-t7ta31oc68pf9ujljftteu4v7h6v71oh.apps.googleusercontent.com',
   clientSecret: 'wst49LrsAT0SGSa35j4cAeIf',
   callbackURL : 'http://localhost:2010//auth/google/callback'
@@ -62,28 +60,47 @@ passport.use(new google_strategy({
         });
         process.nextTick(function() {
           return done(null, profile);
+||||||| merged common ancestors
+  clientID: 'CouplingIO',
+  clientSecret: 'Secret CouplingIO token',
+  callbackURL : 'http://localhost:3010/auth/google/callback'
+  },
+  function(accessToken, refreshToken, profile, done) {
+    UserDB.findOne({email: profile._json.email}, function(err, usr) {
+        usr.token = accessToken;
+        usr.save(function(err, usr, num){
+          if(err){
+            console.log('error saving token');
+          }
         });
-    });
-  }
+        process.nextTick(function() {
+          return done(null, profile);
+=======
+    clientID: 'CouplingIO',
+    clientSecret: 'Secret CouplingIO token',
+    callbackURL : 'http://localhost:3010/auth/google/callback'
+},
+    function(accessToken, refreshToken, profile, done) {
+        UserDB.findOne({email: profile._json.email}, function(err, usr) {
+            usr.token = accessToken;
+            usr.save(function(err, usr, num){
+                if(err){
+                    console.log('error saving token');
+                }
+            });
+            process.nextTick(function() {
+                return done(null, profile);
+            });
+>>>>>>> 52ef7c9160da116b947cc352058eb858ecb583f4
+        });
+    }
 ));
-
+/*
 var handlers = {
   user: new UserHandler(),
   auth: new AuthHandler()
 }
-
-//If is a dev session or no
-/*
-if (args[0] == 'dev'){
-    var port = 3010;
-} else {
-    //Auth
-    app.use(basicAuth('coupling', '666'));
-}
 */
-var port = 3010;
-
-
 //Mailer app config
 /*
 mailer.extend(app, {

@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 
 module.exports = function(db) {
 
+	//User
 	var user_schema = new Schema({
 		_id: Schema.Types.ObjectId
 		,last_name: {type: String, required: true}
@@ -23,10 +24,11 @@ module.exports = function(db) {
 
 	db.users = db.model('users', user_schema);
 
+	//Coupon
 	var coupon_schema = new Schema({
 		user : {type: Schema.ObjectId, ref: user_schema, required: true},
 		amountIssued : {type: Number, required: true},
-		expirationDate : {type: Date, required: true},
+		expirationDate : {type: Date, required: true}
 	});
 
 	coupon_schema.methods.issue = function(user_id, amount, expirationDate){
