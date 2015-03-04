@@ -15,7 +15,7 @@ app.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/register', { templateUrl: '/partials/register.html', controller:'registerController'});
     $routeProvider.when('/issueCoupon', { templateUrl: '/partials/issueCoupon.html', controller:'issueCouponController'});
     //Otherwise
-    $routeProvider.otherwise({redirectTo: '/'});
+    //$routeProvider.otherwise({redirectTo: '/404'});
 }]).config(['$locationProvider', function($locationProvider) {
     $locationProvider.html5Mode(true);
 }]);

@@ -1,42 +1,78 @@
 var mongoose = require('mongoose');
+var bcrypt   = require('bcrypt-nodejs');
 var Schema = mongoose.Schema;
 
 module.exports = function(db) {
 
 	//User
 	var user_schema = new Schema({
-		_id: Schema.Types.ObjectId
-		,last_name: {type: String, required: true}
-		,first_name: {type: String, required: true}
-		,email: {type: String, required: true}
-		,token: {type: String, required: false}
+		facebook         : {
+	        id           : {type: String, required: true},
+	        token        : {type: String, required: false},
+	        email        : {type: String, required: true},
+	        name         : {type: String, required: true}
+	    },
+	    twitter          : {
+	        id           : {type: String, required: true},
+	        token        : {type: String, required: false},
+	        displayName  : {type: String, required: true},
+	        username     : {type: String, required: true}
+	    },
+	    google           : {
+	        id           : {type: String, required: true},
+	        token        : {type: String, required: false},
+	        email        : {type: String, required: true},
+	        name         : {type: String, required: true}
+	    }
 	});
-
-	user_schema.methods.create = function(newUsername,newPassword){
-		this.username = newUsername;
-		this.password = newPassword;
+	
+	//Create Auths
+	user_schema.methods.createFB = function(id,name,email,token){
+		this.facebook.id = id;
+		this.facebook.name = name;
+		this.facebook.email = email;
+		this.facebook.token = token;
+	}
+	user_schema.methods.createTW = function(id,displayName,username,token){
+		this.twitter.id = id;
+		this.twitter.displayName = displayName;
+		this.twitter.username = username;
+		this.twitter.token = token;
+	}
+	user_schema.methods.createGG = function(id,name,email,token){
+		this.google.id = id;
+		this.google.name = name;
+		this.google.email = email;
+		this.google.token = token;
 	}
 
-	user_schema.methods.changePass = function(newPassword){
-		this.password = newPassword;
-		this.save();
+	//Update Auths
+	user_schema.methods.updateFB = function(id,name,email,token){
+		this.facebook.name = name;
+		this.facebook.email = email;
+		this.facebook.token = token;
 	}
+	user_schema.methods.updateTW = function(id,displayName,username,token){
+		this.twitter.displayName = displayName;
+		this.twitter.username = username;
+		this.twitter.token = token;
+	}
+	user_schema.methods.updateGG = function(id,name,email,token){
+		this.google.name = name;
+		this.google.email = email;
+		this.google.token = token;
+	}
+
+	// generating a hash
+	user_schema.methods.generateHash = function(password) {
+	    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+	};
+
+	// checking if password is valid
+	user_schema.methods.validPassword = function(password) {
+	    return bcrypt.compareSync(password, this.local.password);
+	};
 
 	db.users = db.model('users', user_schema);
-
-	//Coupon
-	var coupon_schema = new Schema({
-		user : {type: Schema.ObjectId, ref: user_schema, required: true},
-		amountIssued : {type: Number, required: true},
-		expirationDate : {type: Date, required: true}
-	});
-
-	coupon_schema.methods.issue = function(user_id, amount, expirationDate){
-		this.user = user_id;
-		this.amountIssued = amount;
-		this.expiration = expirationDate;
-	}
-
-	db.coupons = db.model('coupons', coupon_schema);
 
 };
