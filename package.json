@@ -17,32 +17,15 @@
     "cookie-parser": "1.x",
     "ejs": "1.x",
     "express": "4.x",
-<<<<<<< HEAD
     "mongodb": "^1.4.32",
     "mongoose": "^3.8.24",
-||||||| merged common ancestors
-    "mongodb": "~1.4.31",
-    "mongoose": "~3.8.23",
-=======
-    "mongodb": "~1.4.32",
-    "mongoose": "~3.8.24",
->>>>>>> 52ef7c9160da116b947cc352058eb858ecb583f4
     "passport": "^0.2.1",
     "passport-google": "^0.3.0",
     "passport-google-oauth": "^0.1.5",
     "path": "~0.11.14",
-<<<<<<< HEAD
-    "request": "~2.53.0"
-||||||| merged common ancestors
     "request": "~2.53.0",
     "basic-auth-connect": "~1.0.0",
     "cc-wallet-core": "git://github.com/chromaway/cc-wallet-core.git"
-=======
-    "request": "~2.53.0",
-    "basic-auth-connect": "~1.0.0",
-    "cc-wallet-core": "git://github.com/chromaway/cc-wallet-core.git",
-    "passport-google-oauth": "~0.1.5"
->>>>>>> 52ef7c9160da116b947cc352058eb858ecb583f4
   },
   "engines": {
     "node": "0.10.x"
