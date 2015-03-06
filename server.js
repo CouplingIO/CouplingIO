@@ -88,22 +88,21 @@ app.use(function(req,res,next){
 app.get('/', routes.index);
 app.get('/partials/:name',routes.partials);
 app.get('/home', routes.index);
-app.get('/login', routes.index);
-app.get('/register', routes.index);
+app.get('/enter', routes.index);
 app.get('/issueCoupon', routes.index);
 app.get('/404', routes.index);
 
 app.get('/auth/twitter', passport.authenticate('twitter', { scope : 'email' }));
 app.get('/auth/twitter/callback',
     passport.authenticate('twitter', {
-        successRedirect : '/register',
+        successRedirect : '/home',
         failureRedirect : '/'
 }));
 
 app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
 app.get('/auth/google/callback',
     passport.authenticate('google', {
-        successRedirect : '/register',
+        successRedirect : '/home',
         failureRedirect : '/'
 }));
 

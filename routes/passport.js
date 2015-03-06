@@ -4,8 +4,8 @@ var GoogleStrategy   = require('passport-google-oauth').OAuth2Strategy;
 
 var keys = {
     'facebook' : {
-        'clientID'      : 'your-secret-clientID-here', // your App ID
-        'clientSecret'  : 'your-client-secret-here', // your App Secret
+        'clientID'      : 'your-secret-clientID-here', 
+        'clientSecret'  : 'your-client-secret-here', 
         'callbackURL'   : 'http://localhost:3010/auth/facebook/callback'
     },
     'twitter' : {
@@ -40,28 +40,27 @@ module.exports = function(passport,db) {
     },
     function(req, token, refreshToken, profile, done) {
         process.nextTick(function() {
-            // check if the user is already logged in
             if (!req.user) {
                 db.users.findOne({ 'facebook.id' : profile.id }, function(err, user) {
                     if (err)
                         return done(err);
                     else if (user) {
-                        // Created but need update
+                        //Update facebook token to log in
                         if (!user.facebook.token) {
-                            user.updateFB(profile.name.givenName + ' ' + profile.name.familyName,(profile.emails[0].value || '').toLowerCase(),token);
+                            user.logInFB(profile.name.givenName + ' ' + profile.name.familyName,(profile.emails[0].value || '').toLowerCase(),token);
                             user.save(function(err) {
                                 if (err)
                                     return done(err);
                                 else    
                                     return done(null, user);
                             });
+                        } else {
+                            return done(null, user); 
                         }
-                        // User found
-                        return done(null, user); 
                     } else {
                         // Create User
                         var newUser = new db.users();
-                        newUser.createFB(profile.id,profile.name.givenName + ' ' + profile.name.familyName,(profile.emails[0].value || '').toLowerCase(),token);
+                        newUser.signInFB(profile.id,profile.name.givenName + ' ' + profile.name.familyName,(profile.emails[0].value || '').toLowerCase(),token);
                         newUser.save(function(err) {
                             if (err)
                                 return done(err);
@@ -71,9 +70,9 @@ module.exports = function(passport,db) {
                     }
                 });
             } else {
-                // Link accounts
+                //Link google account to existing user
                 var user = req.user;
-                user.createFB(profile.id,profile.name.givenName + ' ' + profile.name.familyName,(profile.emails[0].value || '').toLowerCase(),token);
+                user.signInFB(profile.id,profile.name.givenName + ' ' + profile.name.familyName,(profile.emails[0].value || '').toLowerCase(),token);
                 user.save(function(err) {
                     if (err)
                         return done(err);
@@ -92,17 +91,15 @@ module.exports = function(passport,db) {
         passReqToCallback : true 
     },
     function(req, token, tokenSecret, profile, done) {
-        // asynchronous
         process.nextTick(function() {
-            // check if the user is already logged in
             if (!req.user) {
                 db.users.findOne({ 'twitter.id' : profile.id }, function(err, user) {
                     if (err)
                         return done(err);
                     if (user) {
-                        // if there is a user id already but no token (user was linked at one point and then removed)
+                        //Update twitter token to log in
                         if (!user.twitter.token) {
-                            user.updateTW(profile.displayName,profile.username,token);
+                            user.logInTW(profile.displayName,profile.username,token);
                             user.save(function(err) {
                                 if (err)
                                     return done(err);
@@ -113,9 +110,9 @@ module.exports = function(passport,db) {
                             return done(null, user);
                         }
                     } else {
-                        // if there is no user, create them
+                        //Create User
                         var newUser = new db.users();
-                        newUser.createTW(profile.id,profile.displayName,profile.username,token);
+                        newUser.signInTW(profile.id,profile.displayName,profile.username,token);
                         newUser.save(function(err) {
                             if (err)
                                 return done(err);
@@ -125,8 +122,9 @@ module.exports = function(passport,db) {
                     }
                 });
             } else {
-                var user = req.user; // pull the user out of the session
-                user.createTW(profile.id,profile.displayName,profile.username,token);
+                //Link twitter account to existing user
+                var user = req.user;
+                user.signInTW(profile.id,profile.displayName,profile.username,token);
                 user.save(function(err) {
                     if (err)
                         return done(err);
@@ -146,28 +144,27 @@ module.exports = function(passport,db) {
     },
     function(req, token, refreshToken, profile, done) {
         process.nextTick(function() {
-            // check if the user is already logged in
             if (!req.user) {
                 db.users.findOne({ 'google.id' : profile.id }, function(err, user) {
                     if (err)
                         return done(err);
                     else if (user) {
-                        // Created but need update
+                        //Update google token to log in
                         if (!user.google.token) {
-                            user.updateGG(profile.displayName,(profile.emails[0].value || '').toLowerCase(),token);
+                            user.logInGG(profile.displayName,(profile.emails[0].value || '').toLowerCase(),token);
                             user.save(function(err) {
                                 if (err)
                                     return done(err);
                                 else    
                                     return done(null, user);
                             });
+                        } else {
+                            return done(null, user);
                         }
-                        // User found
-                        return done(null, user); 
                     } else {
                         // Create User
                         var newUser = new db.users();
-                        newUser.createGG(profile.id,profile.name.givenName + ' ' + profile.name.familyName,(profile.emails[0].value || '').toLowerCase(),token);
+                        newUser.signInGG(profile.id,profile.name.givenName + ' ' + profile.name.familyName,(profile.emails[0].value || '').toLowerCase(),token);
                         newUser.save(function(err) {
                             if (err)
                                 return done(err);
@@ -177,9 +174,9 @@ module.exports = function(passport,db) {
                     }
                 });
             } else {
-                // Link accounts
+                //Link google account to existing user
                 var user = req.user;
-                user.createGG(profile.id,profile.name.givenName + ' ' + profile.name.familyName,(profile.emails[0].value || '').toLowerCase(),token);
+                user.signInGG(profile.id,profile.name.givenName + ' ' + profile.name.familyName,(profile.emails[0].value || '').toLowerCase(),token);
                 user.save(function(err) {
                     if (err)
                         return done(err);

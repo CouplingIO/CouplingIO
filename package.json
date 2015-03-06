@@ -20,7 +20,6 @@
     "mongodb": "^1.4.32",
     "mongoose": "^3.8.24",
     "passport": "^0.2.1",
-<<<<<<< HEAD
     "passport-google-oauth": "~0.1.5",
     "path": "~0.11.14",
     "request": "~2.53.0",
@@ -31,14 +30,6 @@
     "bcrypt-nodejs": "0.0.3",
     "passport-facebook": "~2.0.0",
     "passport-google": "~0.3.0"
-=======
-    "passport-google": "^0.3.0",
-    "passport-google-oauth": "^0.1.5",
-    "path": "~0.11.14",
-    "request": "~2.53.0",
-    "basic-auth-connect": "~1.0.0",
-    "cc-wallet-core": "git://github.com/chromaway/cc-wallet-core.git"
->>>>>>> 28d61812a5634028985919efa6b1b97eb98692b1
   },
   "engines": {
     "node": "0.10.x"
