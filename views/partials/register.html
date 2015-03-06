@@ -1,30 +1,61 @@
-<div class="container">
+<div class="container-fluid">
+	<br><br>
 	<div class="row text-center">
-		<h1>Register</h1>
-		<form ng-submit="registerUser()">
-			<div class="form-group">
-			<label for="username">Username</label>
-			<input type="text" class="form-control" id="username" placeholder="Enter email" ng-model="newUsername">
+		<div class="col-xs-10 col-sm-6 col-md-5 col-lg-5 center-block box">
+			<h3 class="authTitle">Login or <a href="#">Sign up</a></h3>
+			<div class="row row-in-box socialButtons text-center">
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+		        <a href="#" class="btn btn-block btn-facebook">
+			        <i class="fa fa-facebook"></i>
+			        <span class="hidden-xs">Facebook</span>
+		        </a>
+	        	</div>
+	        	<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+		        <a href="#" class="btn btn-block btn-twitter">
+			        <i class="fa fa-twitter"></i>
+			        <span class="hidden-xs">Twitter</span>
+		        </a>
+	        	</div>
+	        	<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+		        <a href="#" class="btn btn-block btn-google">
+			        <i class="fa fa-google-plus"></i>
+			        <span class="hidden-xs">Google+</span>
+		        </a>
+		        </div>
 			</div>
-			<div class="form-group">
-			<label for="password">Password</label>
-			<input type="password" class="form-control" id="password" placeholder="Password" ng-model="newPassword">
+			<div class="row row-in-box loginOr">
+				<hr class="hrOr">
+				<span class="spanOr">or</span>
 			</div>
-			<button type="submit" class="btn btn-default">Submit</button>
-		</form>
-	</div>	
-	<div class="row text-center">
-		<h1>Change Pass</h1>
-		<form ng-submit="changePassword()">
-			<div class="form-group">
-			<label for="username">Username</label>
-			<input type="text" class="form-control" id="username" placeholder="Enter email" ng-model="newUsername">
+			<div class="row row-in-box text-center">
+			    <form class="omb_loginForm" action="" autocomplete="off" method="POST">
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-user"></i></span>
+						<input type="text" class="form-control" name="username" placeholder="email address">
+					</div>
+					<span class="help-block"></span>
+										
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+						<input  type="password" class="form-control" name="password" placeholder="Password">
+					</div>
+                    <span class="help-block">Password error</span>
+					<button class="btn btn-primary btn-auth pull-right" type="submit">Login</button>
+					<button class="btn btn-primary btn-auth pull-left" type="submit">Sign Up</button>
+				</form>
+		    </div>
+			<div class="row row-in-box">
+				<div class="pull-right">
+					<label class="checkbox">
+						<input type="checkbox" value="remember-me">Remember Me
+					</label>
+				</div>
+				<div class="pull-left">
+					<p class="forgotPwd">
+						<a href="#">Forgot password?</a>
+					</p>
+				</div>
 			</div>
-			<div class="form-group">
-			<label for="password">New Password</label>
-			<input type="password" class="form-control" id="password" placeholder="Password" ng-model="newPassword">
-			</div>
-			<button type="submit" class="btn btn-default">Submit</button>
-		</form>
+		</div>    	
 	</div>
 </div>
