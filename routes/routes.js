@@ -11,23 +11,9 @@ exports.partials = function(req,res) {
     res.render('partials/' + req.params.name);
 };
 
-exports.login = function(req, res){
-    console.log(req.query);
-    res.json({success:true});
-};
-
-exports.register = function(req, res){
-    console.log(req.query);
-    var newUser = new req.db.users();
-    newUser.create(req.query.first_name,req.query.last_name,req.query.email,req.query.token);
-    newUser.save(function(err){
-    	if (err){
-    		console.log(err);
-    		res.json({success:false});
-    	} else {
-    		res.json({success:true});
-    	}
-    });
+exports.logout = function(req, res) {
+    req.logout();
+    res.redirect('/');
 };
 
 exports.issueCoupon = function(req, res){
@@ -42,6 +28,10 @@ exports.issueCoupon = function(req, res){
             res.json({success:true});
         }
     });
+};
+exports.myUser = function(req, res){
+    //console.log(req.user);
+    res.json(req.user);
 };
 
 exports.createWallet = function(req, res){

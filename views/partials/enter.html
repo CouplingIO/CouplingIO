@@ -2,16 +2,16 @@
 	<br><br>
 	<div class="row text-center">
 		<div class="col-xs-10 col-sm-6 col-md-5 col-lg-5 center-block box">
-			<h3 class="authTitle">Login or <a href="#">Sign up</a></h3>
+			<h3 class="authTitle">Login</h3>
 			<div class="row row-in-box socialButtons text-center">
 				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-		        <a href="/auth/facebook" target="_self" class="btn btn-block btn-facebook">
+		        <a href="/auth/facebook?id=myID" target="_self" class="btn btn-block btn-facebook">
 			        <i class="fa fa-facebook"></i>
 			        <span class="hidden-xs">Facebook</span>
 		        </a>
 	        	</div>
 	        	<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-		        <a href="/auth/twitter" target="_self" class="btn btn-block btn-twitter">
+		        <a href="/auth/twitter?action=login" target="_self" class="btn btn-block btn-twitter">
 			        <i class="fa fa-twitter"></i>
 			        <span class="hidden-xs">Twitter</span>
 		        </a>
@@ -27,7 +27,28 @@
 				<hr class="hrOr">
 				<span class="spanOr">or</span>
 			</div>
-			<div class="row row-in-box text-center">
+			<h3 class="authTitle">Sign up</h3>
+			<div class="row row-in-box socialButtons text-center">
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+		        <a href="/auth/facebook?id=myID" target="_self" class="btn btn-block btn-facebook">
+			        <i class="fa fa-facebook"></i>
+			        <span class="hidden-xs">Facebook</span>
+		        </a>
+	        	</div>
+	        	<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+		        <a href="/auth/twitter?action=signin" target="_self" class="btn btn-block btn-twitter">
+			        <i class="fa fa-twitter"></i>
+			        <span class="hidden-xs">Twitter</span>
+		        </a>
+	        	</div>
+	        	<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+		        <a href="/auth/google" target="_self" class="btn btn-block btn-google">
+			        <i class="fa fa-google-plus"></i>
+			        <span class="hidden-xs">Google+</span>
+		        </a>
+		        </div>
+			</div>
+			<!--<div class="row row-in-box text-center">
 			    <form class="omb_loginForm" action="" autocomplete="off" method="POST">
 					<div class="input-group">
 						<span class="input-group-addon"><i class="fa fa-user"></i></span>
@@ -39,7 +60,7 @@
 						<span class="input-group-addon"><i class="fa fa-lock"></i></span>
 						<input  type="password" class="form-control" name="password" placeholder="Password">
 					</div>
-                    <span class="help-block">Password error</span>
+                    <span class="help-block" ng-show="passwordError">Password error</span>
 					<button class="btn btn-primary btn-auth pull-right" type="submit">Login</button>
 					<button class="btn btn-primary btn-auth pull-left" type="submit">Sign Up</button>
 				</form>
@@ -56,6 +77,7 @@
 					</p>
 				</div>
 			</div>
+			-->
 		</div>    	
 	</div>
 </div>

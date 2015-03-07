@@ -32,53 +32,22 @@ services.factory('sessionStorage', ['localStorageService', function (localStorag
 services.factory('userService',['$http', function ($http) {
     var factory = {};
 
-    factory.login = function(username,pass) {
-        var promise = $http({method: 'POST',
-                url: '/login',
-                params: {"username":username,"pass":pass}
+    factory.myUser = function() {
+        var promise = $http({method: 'GET',
+                url: '/myUser',
+                params: {}
             })
             .success(function (data, status, headers, config) {
-                console.log("Success login");
+                console.log("Succes getting my user");
                 return data;
             })
             .error(function (data, status, headers, config) {
-                console.log("Error login");
+                console.log("Error getting my user");
                 return data;
             });
         return promise;
     }
 
-    factory.register = function(username,pass) {
-        var promise = $http({method: 'POST',
-                url: '/register',
-                params: {"username":username,"pass":pass}
-            })
-            .success(function (data, status, headers, config) {
-                console.log("Success regsitering user");
-                return data;
-            })
-            .error(function (data, status, headers, config) {
-                console.log("Error registering user");
-                return data;
-            });
-        return promise;
-    }
-
-    factory.changePass = function(username,newPass) {
-        var promise = $http({method: 'POST',
-                url: '/changePass',
-                params: {"username":username,"newPassword":newPass}
-            })
-            .success(function (data, status, headers, config) {
-                console.log("Success regsitering user");
-                return data;
-            })
-            .error(function (data, status, headers, config) {
-                console.log("Error registering user");
-                return data;
-            });
-        return promise;
-    }
 
     factory.issueCoupon = function(issueAmount, expirationDate) {
         var promise = $http({method: 'POST',
@@ -91,21 +60,6 @@ services.factory('userService',['$http', function ($http) {
             })
             .error(function (data, status, headers, config) {
                 console.log("Error issuing Coupon");
-                return data;
-            });
-        return promise;
-    }
-
-    factory.createWallet = function(issueAmount, expirationDate) {
-        var promise = $http({method: 'POST',
-                url: '/createWallet'
-            })
-            .success(function (data, status, headers, config) {
-                console.log("Success creating wallet");
-                return data;
-            })
-            .error(function (data, status, headers, config) {
-                console.log("Error creating wallet");
                 return data;
             });
         return promise;

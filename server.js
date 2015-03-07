@@ -92,29 +92,45 @@ app.get('/enter', routes.index);
 app.get('/issueCoupon', routes.index);
 app.get('/404', routes.index);
 
+app.get('/myUser', isLoggedIn, routes.myUser);
+
+app.get('/logout', isLoggedIn, routes.logout);
+
 app.get('/auth/twitter', passport.authenticate('twitter', { scope : 'email' }));
-app.get('/auth/twitter/callback',
+app.get('/auth/twitter/callback', 
     passport.authenticate('twitter', {
         successRedirect : '/home',
-        failureRedirect : '/'
-}));
+        failureRedirect : '/enter'
+    })
+);
 
 app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
 app.get('/auth/google/callback',
     passport.authenticate('google', {
         successRedirect : '/home',
-        failureRedirect : '/'
-}));
+        failureRedirect : '/enter'
+    })
+);
 
-app.post('/login', routes.login);
-app.post('/register', routes.register);
+app.get('/auth/facebook', passport.authenticate('facebook', { scope : ['email'] }));
+app.get('/auth/facebook/callback',
+    passport.authenticate('facebook', {
+        successRedirect : '/home',
+        failureRedirect : '/enter'
+    })
+);
+
 app.post('/issueCoupon', routes.issueCoupon);
-app.post('/createWallet', routes.createWallet);
 
 //IF NOT GO TO ERROR404
 //app.all('*',function(req,res) { res.redirect('/404') });
 
-module.exports = app;
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated())
+        return next();
+    else
+        res.redirect('/enter');
+}
 
 //Start the server
 app.listen(app.get('port'), function() {

@@ -4,8 +4,8 @@ var GoogleStrategy   = require('passport-google-oauth').OAuth2Strategy;
 
 var keys = {
     'facebook' : {
-        'clientID'      : 'your-secret-clientID-here', 
-        'clientSecret'  : 'your-client-secret-here', 
+        'clientID'      : '660523004052804', 
+        'clientSecret'  : '6b9e37b8045b46d9cc68c51088846f29', 
         'callbackURL'   : 'http://localhost:3010/auth/facebook/callback'
     },
     'twitter' : {
@@ -31,36 +31,36 @@ module.exports = function(passport,db) {
         });
     });
 
-    //Facebook
     passport.use(new FacebookStrategy({
         clientID        : keys.facebook.clientID,
         clientSecret    : keys.facebook.clientSecret,
         callbackURL     : keys.facebook.callbackURL,
-        passReqToCallback : true
+        passReqToCallback : true 
     },
     function(req, token, refreshToken, profile, done) {
         process.nextTick(function() {
+            // check if the user is already logged in
             if (!req.user) {
                 db.users.findOne({ 'facebook.id' : profile.id }, function(err, user) {
                     if (err)
                         return done(err);
                     else if (user) {
-                        //Update facebook token to log in
+                        // Log In
                         if (!user.facebook.token) {
                             user.logInFB(profile.name.givenName + ' ' + profile.name.familyName,(profile.emails[0].value || '').toLowerCase(),token);
                             user.save(function(err) {
                                 if (err)
                                     return done(err);
-                                else    
-                                    return done(null, user);
+                                    
+                                return done(null, user);
                             });
                         } else {
-                            return done(null, user); 
+                            return done(null, user);
                         }
                     } else {
-                        // Create User
+                        // Sign in
                         var newUser = new db.users();
-                        newUser.signInFB(profile.id,profile.name.givenName + ' ' + profile.name.familyName,(profile.emails[0].value || '').toLowerCase(),token);
+                        newUser.signInFB(profile.idprofile.name.givenName + ' ' + profile.name.familyName,(profile.emails[0].value || '').toLowerCase(),token);
                         newUser.save(function(err) {
                             if (err)
                                 return done(err);
@@ -70,9 +70,61 @@ module.exports = function(passport,db) {
                     }
                 });
             } else {
-                //Link google account to existing user
+                // Link account
+                var user = req.user; 
+                user.linkFB(profile.idprofile.name.givenName + ' ' + profile.name.familyName,(profile.emails[0].value || '').toLowerCase(),token);
+                user.save(function(err) {
+                    if (err)
+                        return done(err);
+                    else    
+                        return done(null, user);
+                });
+            }
+        });
+    }));
+
+    passport.use(new TwitterStrategy({
+        consumerKey     : keys.twitter.consumerKey,
+        consumerSecret  : keys.twitter.consumerSecret,
+        callbackURL     : keys.twitter.callbackURL,
+        passReqToCallback : true
+    },
+    function(req, token, tokenSecret, profile, done) {
+        process.nextTick(function() {
+            // check if the user is already logged in
+            if (!req.user) {
+                db.users.findOne({ 'twitter.id' : profile.id }, function(err, user) {
+                    if (err)
+                        return done(err);
+                    else if (user) {
+                        // Log In
+                        if (!user.twitter.token) {
+                            user.logInTW(profile.displayName,profile.username,token);
+                            user.save(function(err) {
+                                if (err)
+                                    return done(err);
+                                else 
+                                    return done(null, user);
+                            });
+                        } else {
+                            return done(null, user);
+                        }
+                    } else {
+                        //Sign in
+                        var newUser = new db.users();
+                        newUser.signInTW(profile.id,profile.displayName,profile.username,token);
+                        newUser.save(function(err) {
+                            if (err)
+                                return done(err);
+                            else  
+                                return done(null, newUser);
+                        });
+                    }
+                });
+            } else {
+                // Link account
                 var user = req.user;
-                user.signInFB(profile.id,profile.name.givenName + ' ' + profile.name.familyName,(profile.emails[0].value || '').toLowerCase(),token);
+                user.linkTW(profile.id,profile.displayName,profile.username,token);
                 user.save(function(err) {
                     if (err)
                         return done(err);
@@ -83,36 +135,36 @@ module.exports = function(passport,db) {
         });
     }));
 
-    //Twitter
-    passport.use(new TwitterStrategy({
-        consumerKey     : keys.twitter.consumerKey,
-        consumerSecret  : keys.twitter.consumerSecret,
-        callbackURL     : keys.twitter.callbackURL,
+    passport.use(new GoogleStrategy({
+        clientID        : keys.google.clientID,
+        clientSecret    : keys.google.clientSecret,
+        callbackURL     : keys.google.callbackURL,
         passReqToCallback : true 
     },
-    function(req, token, tokenSecret, profile, done) {
+    function(req, token, refreshToken, profile, done) {
         process.nextTick(function() {
+            //Check if the user is already logged in
             if (!req.user) {
-                db.users.findOne({ 'twitter.id' : profile.id }, function(err, user) {
+                db.users.findOne({ 'google.id' : profile.id }, function(err, user) {
                     if (err)
                         return done(err);
                     if (user) {
-                        //Update twitter token to log in
-                        if (!user.twitter.token) {
-                            user.logInTW(profile.displayName,profile.username,token);
+                        // LogIn
+                        if (!user.google.token) {
+                            newUser.logInGG(profile.displayName,(profile.emails[0].value || '').toLowerCase(),token)
                             user.save(function(err) {
                                 if (err)
                                     return done(err);
                                 else
                                     return done(null, user);
                             });
-                        } else{
+                        } else {
                             return done(null, user);
                         }
                     } else {
-                        //Create User
+                        // Sign in
                         var newUser = new db.users();
-                        newUser.signInTW(profile.id,profile.displayName,profile.username,token);
+                        newUser.signInGG(profile.id,profile.displayName,(profile.emails[0].value || '').toLowerCase(),token)
                         newUser.save(function(err) {
                             if (err)
                                 return done(err);
@@ -122,61 +174,9 @@ module.exports = function(passport,db) {
                     }
                 });
             } else {
-                //Link twitter account to existing user
+                // Link account
                 var user = req.user;
-                user.signInTW(profile.id,profile.displayName,profile.username,token);
-                user.save(function(err) {
-                    if (err)
-                        return done(err);
-                    else
-                        return done(null, user);
-                });
-            }
-        });
-    }));
-
-    //Google
-    passport.use(new GoogleStrategy({
-        clientID        : keys.google.clientID,
-        clientSecret    : keys.google.clientSecret,
-        callbackURL     : keys.google.callbackURL,
-        passReqToCallback : true 
-    },
-    function(req, token, refreshToken, profile, done) {
-        process.nextTick(function() {
-            if (!req.user) {
-                db.users.findOne({ 'google.id' : profile.id }, function(err, user) {
-                    if (err)
-                        return done(err);
-                    else if (user) {
-                        //Update google token to log in
-                        if (!user.google.token) {
-                            user.logInGG(profile.displayName,(profile.emails[0].value || '').toLowerCase(),token);
-                            user.save(function(err) {
-                                if (err)
-                                    return done(err);
-                                else    
-                                    return done(null, user);
-                            });
-                        } else {
-                            return done(null, user);
-                        }
-                    } else {
-                        // Create User
-                        var newUser = new db.users();
-                        newUser.signInGG(profile.id,profile.name.givenName + ' ' + profile.name.familyName,(profile.emails[0].value || '').toLowerCase(),token);
-                        newUser.save(function(err) {
-                            if (err)
-                                return done(err);
-                            else 
-                                return done(null, newUser);
-                        });
-                    }
-                });
-            } else {
-                //Link google account to existing user
-                var user = req.user;
-                user.signInGG(profile.id,profile.name.givenName + ' ' + profile.name.familyName,(profile.emails[0].value || '').toLowerCase(),token);
+                user.linkGG(profile.id,profile.displayName,(profile.emails[0].value || '').toLowerCase(),token)
                 user.save(function(err) {
                     if (err)
                         return done(err);

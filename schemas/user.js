@@ -20,11 +20,7 @@ module.exports = function(db) {
 		likes : [{
 			user_id : String
 		}],
-		local : {
-			email : String,
-			password : String,
-			token : String
-		},
+		session_token : String,
 		facebook : {
 	        id : String,
 	        token : String,
@@ -44,26 +40,48 @@ module.exports = function(db) {
 	        name : String
 	    }
 	});
-	
-	//Create Auths
-	user_schema.methods.signInLocal = function(email,password){
-		this.local.email = email;
-		this.local.password = password;
-		this.local.token = generateToken(6);
+
+	//Fill new user
+	user_schema.methods.fillUser = function(){
+		this.official_name = null;
+		this.website = null;
+		this.description = null;
+		this.token_name = "Couplings";
+		this.online = true;
+		this.priv_key = null;
+		this.pub_key = null;
+		this.wallet = null;
+		this.address_book = [];
+		this.likes = [];
+		this.session_token = null;
+		this.facebook = {};
+	    this.twitter = {};
+	    this.google = {};
 	}
+	
+	//SignIn
 	user_schema.methods.signInFB = function(id,name,email,token){
+		this.online = true;
+		this.official_name = name;
+		this.session_token = generateToken(6);
 		this.facebook.id = id;
 		this.facebook.name = name;
 		this.facebook.email = email;
 		this.facebook.token = token;
 	}
 	user_schema.methods.signInTW = function(id,displayName,username,token){
+		this.online = true;
+		this.official_name = displayName;
+		this.session_token = generateToken(6);
 		this.twitter.id = id;
 		this.twitter.displayName = displayName;
 		this.twitter.username = username;
 		this.twitter.token = token;
 	}
 	user_schema.methods.signInGG = function(id,name,email,token){
+		this.online = true;
+		this.official_name = name;
+		this.session_token = generateToken(6);
 		this.google.id = id;
 		this.google.name = name;
 		this.google.email = email;
@@ -71,23 +89,43 @@ module.exports = function(db) {
 	}
 
 	//LogIn
-	user_schema.methods.logInLocal = function(){
-		this.online = true;
-	}
 	user_schema.methods.logInFB = function(name,email,token){
 		this.online = true;
+		this.session_token = generateToken(6);
 		this.facebook.name = name;
 		this.facebook.email = email;
 		this.facebook.token = token;
 	}
 	user_schema.methods.logInTW = function(displayName,username,token){
 		this.online = true;
+		this.session_token = generateToken(6);
 		this.twitter.displayName = displayName;
 		this.twitter.username = username;
 		this.twitter.token = token;
 	}
 	user_schema.methods.logInGG = function(name,email,token){
 		this.online = true;
+		this.session_token = generateToken(6);
+		this.google.name = name;
+		this.google.email = email;
+		this.google.token = token;
+	}
+
+	//Link social network
+	user_schema.methods.linkFB = function(id,name,email,token){
+		this.facebook.id = id;
+		this.facebook.name = name;
+		this.facebook.email = email;
+		this.facebook.token = token;
+	}
+	user_schema.methods.linkTW = function(id,displayName,username,token){
+		this.twitter.id = id;
+		this.twitter.displayName = displayName;
+		this.twitter.username = username;
+		this.twitter.token = token;
+	}
+	user_schema.methods.linkGG = function(id,name,email,token){
+		this.google.id = id;
 		this.google.name = name;
 		this.google.email = email;
 		this.google.token = token;
