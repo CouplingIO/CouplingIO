@@ -5,8 +5,6 @@ var http = require('http');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var path = require('path');
-//Mail
-//var mailer = require('express-mailer');
 // Mongo
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
@@ -40,20 +38,6 @@ db.once('open', function callback () {
     console.log('Connected to MONGOLAB DB !');
 });
 
-//Mailer app config
-/*
-mailer.extend(app, {
-  from: 'no-reply@example.com',
-  host: 'smtp.gmail.com', // hostname
-  secureConnection: true, // use SSL
-  port: 465, // port for secure SMTP
-  transportMethod: 'SMTP', // default is SMTP. Accepts anything that nodemailer accepts
-  auth: {
-    user: 'contact@user.com',
-    pass: 'pass'
-  }
-});
-*/
 // Config Envarioment
 app.set('port', port || process.env.PORT);
 app.set('views', __dirname + '/views');
@@ -85,15 +69,15 @@ app.use(function(req,res,next){
     next();
 });
 
-app.get('/', routes.index);
+
 app.get('/partials/:name',routes.partials);
-app.get('/home', routes.index);
+app.get('/', isLoggedIn , routes.index);
 app.get('/enter', routes.index);
-app.get('/issueCoupon', routes.index);
+app.get('/issueCoupon',isLoggedIn  , routes.index);
 app.get('/404', routes.index);
-
+app.get('/home', isLoggedIn, routes.index);
+app.get('/myProfile', isLoggedIn, routes.index);
 app.get('/myUser', isLoggedIn, routes.myUser);
-
 app.get('/logout', isLoggedIn, routes.logout);
 
 app.get('/auth/twitter', passport.authenticate('twitter', { scope : 'email' }));

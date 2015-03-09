@@ -12,6 +12,7 @@ app.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/', { templateUrl: '/partials/home.html', controller:'homeController'});
     $routeProvider.when('/home', { templateUrl: '/partials/home.html', controller:'homeController'});
     $routeProvider.when('/enter', { templateUrl: '/partials/enter.html', controller:'enterController'});
+    $routeProvider.when('/myProfile', { templateUrl: '/partials/myProfile.html', controller:'myProfileController'});
     $routeProvider.when('/issueCoupon', { templateUrl: '/partials/issueCoupon.html', controller:'issueCouponController'});
     //Otherwise
     //$routeProvider.otherwise({redirectTo: '/404'});

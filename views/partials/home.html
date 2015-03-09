@@ -1,25 +1,81 @@
-<div class="container">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Coupling</h3>
+<nav class="navbar navbar-default navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/home" target="_self"><i class="fa fa-home"></i> Home</a>
         </div>
-        <div class="panel-body" ng-model="myUser">
-            {{myUser}}
-            <a class="btn btn-default" href="#" role="button">Home</a>
-            <a class="btn btn-default" href="/login" role="button" ng-show="!userOnline">Login</a>
-            <a class="btn btn-default" href="/logout" role="button" ng-show="userOnline">Logout</a>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a>Search Bar</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/myProfile" target="_self"> <i class="fa fa-user"></i> {{myUser.official_name}}</a></li>
+                <li><a href="/logout" target="_self" ><i class="fa fa-power-off"></i> Log Out</a></li>
+            </ul>
         </div>
     </div>
-	<div class="row" ng-show="userOnline">
-        <h1>Coupling Wallet</h1>
-        <div class="panel panel-default">
-            <div class="panel-body">
-                Wallet content
+</nav>
+
+<div class="container">
+    <div clas="row">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Coupling</h3>
+                </div>
+                <div class="panel-body" ng-model="myUser">
+                    <div class="row text-center">Couplings Balance = 100 Tokens.</div>
+                    <div class="row text-center">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <a class="btn btn-default" href="/login" role="button" >Send</a>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <a class="btn btn-default" href="/logout" role="button" >Receive</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="panel-footer">Wallet footer</div>
         </div>
-	</div>
-	<div class="row" >
-		<a class="btn btn-default" href="/logout" target="_self" role="button">Log Out</a>
-	</div>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"> <i class="fa fa-book"></i> Address Book</h3>
+                </div>
+                <div class="panel-body" ng-model="myUser">
+                    
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-exchange"></i> My Contracts</h3>
+                </div>
+                <div class="panel-body" ng-model="myUser">
+                    
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-tasks"></i> Recent Activity</h3></h3>
+                </div>
+                <div class="panel-body" ng-model="myUser">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+    
+    
+
+
+    <div class="container">
+
+    </div> 
+
