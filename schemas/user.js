@@ -1,8 +1,7 @@
 var mongoose = require('mongoose');
-var bcrypt   = require('bcrypt-nodejs');
 var Schema = mongoose.Schema;
 
-module.exports = function(db) {
+module.exports = function(db,bitcore) {
 
 	//User
 	var user_schema = new Schema({
@@ -13,7 +12,7 @@ module.exports = function(db) {
 		online : Boolean,
 		priv_key : Object,
 		pub_key : Object,
-		wallet : Object,
+		address : Object,
 		address_book : [{
 			user_id : String
 		}],
@@ -48,9 +47,9 @@ module.exports = function(db) {
 		this.description = null;
 		this.token_name = "Couplings";
 		this.online = true;
-		this.priv_key = null;
-		this.pub_key = null;
-		this.wallet = null;
+		this.priv_key = new bitcore.PrivateKey();
+		this.pub_key = this.priv_key.publicKey;
+		this.address = this.pub_key.toAddress();
 		this.address_book = [];
 		this.likes = [];
 		this.session_token = null;
@@ -61,27 +60,33 @@ module.exports = function(db) {
 	
 	//SignIn
 	user_schema.methods.signInFB = function(id,name,email,token){
+		this.fillUser();
 		this.online = true;
 		this.official_name = name;
 		this.session_token = generateToken(6);
+		this.priv_key = new bitcore.PrivateKey();
 		this.facebook.id = id;
 		this.facebook.name = name;
 		this.facebook.email = email;
 		this.facebook.token = token;
 	}
 	user_schema.methods.signInTW = function(id,displayName,username,token){
+		this.fillUser();
 		this.online = true;
 		this.official_name = displayName;
 		this.session_token = generateToken(6);
+		this.priv_key = new bitcore.PrivateKey();
 		this.twitter.id = id;
 		this.twitter.displayName = displayName;
 		this.twitter.username = username;
 		this.twitter.token = token;
 	}
 	user_schema.methods.signInGG = function(id,name,email,token){
+		this.fillUser();
 		this.online = true;
 		this.official_name = name;
 		this.session_token = generateToken(6);
+		this.priv_key = new bitcore.PrivateKey();
 		this.google.id = id;
 		this.google.name = name;
 		this.google.email = email;

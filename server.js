@@ -15,6 +15,8 @@ var basicAuth = require('basic-auth-connect')
 var passport = require('passport')
 var flash = require('connect-flash');
 
+var bitcore   = require('bitcore');
+
 //Launch express
 var app = express();
 
@@ -43,15 +45,16 @@ app.set('port', port || process.env.PORT);
 app.set('views', __dirname + '/views');
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
-app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(bodyParser.json({limit: '50mb'})); 
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'ilovescotchscotchyscotchscotch' }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash()); 
 //Schemas
-require('./schemas/user')(db);
+require('./schemas/user')(db,bitcore);
 
 //Passport
 require('./routes/passport')(passport,db);
