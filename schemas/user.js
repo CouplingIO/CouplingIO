@@ -64,18 +64,16 @@ module.exports = function(db,bitcore) {
 		this.online = true;
 		this.official_name = name;
 		this.session_token = generateToken(6);
-		this.priv_key = new bitcore.PrivateKey();
 		this.facebook.id = id;
 		this.facebook.name = name;
 		this.facebook.email = email;
 		this.facebook.token = token;
 	}
 	user_schema.methods.signInTW = function(id,displayName,username,token){
-		this.fillUser();
+		//this.fillUser();
 		this.online = true;
 		this.official_name = displayName;
 		this.session_token = generateToken(6);
-		this.priv_key = new bitcore.PrivateKey();
 		this.twitter.id = id;
 		this.twitter.displayName = displayName;
 		this.twitter.username = username;
@@ -86,7 +84,6 @@ module.exports = function(db,bitcore) {
 		this.online = true;
 		this.official_name = name;
 		this.session_token = generateToken(6);
-		this.priv_key = new bitcore.PrivateKey();
 		this.google.id = id;
 		this.google.name = name;
 		this.google.email = email;

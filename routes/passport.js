@@ -92,6 +92,7 @@ module.exports = function(passport,db) {
     function(req, token, tokenSecret, profile, done) {
         process.nextTick(function() {
             // check if the user is already logged in
+            console.log("twitter auth");
             if (!req.user) {
                 db.users.findOne({ 'twitter.id' : profile.id }, function(err, user) {
                     if (err)
